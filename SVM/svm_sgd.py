@@ -1,7 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import sys
-import time
 
 
 class svm_sgd:
@@ -34,12 +32,7 @@ class svm_sgd:
 			self.cost.append(new_cost)			
 			self.i = self.i % n + 1			
 			self.k += 1
-			# print(self.k, self.delta_cost)
-		self.runtime = time.time() - start_time
-		print("SVM SGD Convergency time: {}".format(self.runtime))
-		# x = [i for i in range(self.k + 1)]
-		# plt.plot(x, self.cost)		
-		# plt.show()	
+
 	
 	def _shuffle(self, training_set, labels):
 		indice = np.arange(len(training_set))
@@ -79,27 +72,6 @@ class svm_sgd:
 		delta_cost_percent = self._delta_cost_percent(new_cost)
 		return (self.delta_cost + delta_cost_percent)/2
 
-
-def read_training_set(training_set_filename):
-	features = []
-	with open(training_set_filename, 'r') as training_set_file:
-		for line in training_set_file:
-			feature = [int(s) for s in line.strip().split(',')]
-			features.append(feature)
-	return np.array(features)
-
-def read_labels(labels_filename):
-	labels = []
-	with open(labels_filename, 'r') as labels_file:
-		for line in labels_file:
-			labels.append(int(line.strip()))
-	return np.array(labels)	
-
-if __name__ == '__main__':
-	training_set = read_training_set(sys.argv[1])
-	labels = read_labels(sys.argv[2])
-	svm = svm_sgd(C=100)
-	svm.fit(training_set, labels)
 
 
 	
